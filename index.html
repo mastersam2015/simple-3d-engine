@@ -1,0 +1,231 @@
+  <center>
+  
+  <canvas id="myCanvas" width="600" height="600"></canvas>
+  
+  
+
+  
+  <script>
+  var xr;
+  var yr;
+  var tablex = new Array();
+  var tabley = new Array();
+  var tableb = new Array();
+  var tablew = new Array();
+  var tableh = new Array();
+  var tableg = new Array();
+  
+    var tablenowax = new Array();
+  var tablenoway = new Array();
+  
+  
+  var bonus;
+  var delta2=0;
+  var delta3=0;
+  var x;
+  var y;
+  var skok=0;
+  var kont=0;
+  var hv;
+  
+function random(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+  
+  
+  var dimetricTx = function(x,y,z) { return x + z/2; };
+var dimetricTy = function(x,y,z) { return y + z/4; };
+    var c = document.getElementById("myCanvas");
+  var ctx = c.getContext("2d");
+ 
+
+function rysuj(x,y,width, height, z) {
+ 
+
+  z=z/2;
+ctx.beginPath();
+
+
+ctx.rect(x, y, width, height);
+ctx.rect(x+z, y+z, width, height);
+ctx.moveTo(x, y);
+ctx.lineTo(x+z, y+z);
+ctx.moveTo(x+width, y);
+ctx.lineTo(x+z+width, y+z);
+ctx.moveTo(x, y+height);
+ctx.lineTo(x+z, y+z+height);
+ctx.moveTo(x+width, y+height);
+ctx.lineTo(x+z+width, y+z+height);
+
+
+ctx.stroke();
+
+}
+
+
+for (var i=0;i<=20;i++){ 
+xr=random(-600,600);
+yr=random(-600,600);
+bonus=5;
+tablex[i]=Math.round(xr); 
+tabley[i]=Math.round(yr); 
+tableb[i]=bonus;
+tablew[i]=random(20,50);
+tableh[i]=random(20,50);
+tableg[i]=random(20,50);
+tablenowax[i] = tablex[i];
+tablenoway[i] = tabley[i];
+}
+/*
+for (var i2=0;i2<=20;i2++){
+
+rysuj(tablex[i2],tabley[i2],50,50,50);
+console.log(Math.round(tablex[i2]*(tableb[i2]/10))+" "+Math.round(tabley[i2]*(tableb[i2]/10)));
+}
+*/
+
+function matrix(delta,skok,kont,hv){
+var nx;
+var ny;
+var ox=300;
+var oy=600;
+for (var i3=0;i3<=20;i3++){
+
+//-------------------------------
+//-----operacje matematyczne-----
+//-------------------------------
+
+
+if(hv != 0){
+tabley[i3]=tabley[i3]+hv;
+}
+
+nx=Math.round(((tablex[i3]-ox)*Math.cos(kont*Math.PI/180))-((tabley[i3]-oy)*((Math.sin(kont*Math.PI/180)))));
+ny=Math.round(((tablex[i3]-ox)*Math.sin(kont*Math.PI/180))+((tabley[i3]-oy)*((Math.cos(kont*Math.PI/180)))));
+
+
+tablex[i3]=nx+ox;
+tabley[i3]=ny+oy;
+
+/*
+
+
+
+--------------
+tablex[i3]=Math.cos(kont*Math.PI/180)*tablex[i3]+Math.sin(kont*Math.PI/180)*tablex[i3];
+tabley[i3]=tabley[i3];
+---------------
+
+---------------
+tablex[i3]=Math.round((tablex[i3]*Math.cos(kont*Math.PI/180))-tabley[i3]*((Math.sin(kont*Math.PI/180))));
+tabley[i3]=Math.round((tablex[i3]*Math.sin(kont*Math.PI/180))+tabley[i3]*((Math.cos(kont*Math.PI/180))));
+-----------------
+
+-------------------------------------------
+var t=Date.now(), ang=t/500, s=Math.sin(kont*Math.PI/180), c=Math.cos(kont*Math.PI/180);
+
+var m = [c,0,-s,0,  0,1,0,0,  s,0,c,4+5*Math.sin(t/820)];
+
+tablex[i3]= m[0]*tablex[i3]+m[1]*tabley[i3]+m[ 2]*tableb[i3]+m[ 3];
+tabley[i3] = m[4]*tablex[i3]+m[5]*tabley[i3]+m[ 6]*tableb[i3]+m[ 7];
+tableb[i3] = m[8]*tablex[i3]+m[9]*tabley[i3]+m[10]*tableb[i3]+m[11];
+----------------------------------------
+
+if(tablex[i3]>300){
+tablex[i3]=Math.round((tablex[i3]*Math.cos(kont*Math.PI/180))-tabley[i3]*((Math.sin(kont*Math.PI/180))));
+tabley[i3]=Math.round((tablex[i3]*Math.sin(kont*Math.PI/180))+tabley[i3]*((Math.cos(kont*Math.PI/180))));
+}else{
+tablex[i3]=Math.round((tablex[i3]*Math.cos((kont*Math.PI/180))-90)-tabley[i3]*((Math.sin((kont*Math.PI/180))+90)));
+tabley[i3]=Math.round((tablex[i3]*Math.sin((kont*Math.PI/180)-90))+tabley[i3]*((Math.cos((kont*Math.PI/180))+90)));
+}
+
+
+---------------------------------------------
+x1=x*cos(kont)-y*sin(kont)
+y1=x*sin(kont)+y*cos(kont)
+*/
+
+
+//rysuj(tablex[i2],tabley[i2],50,50,50);
+//x|
+//---
+// |
+if ((600/2)>tablex[i3] && (600/2) > tabley[i3]){
+
+tabley[i3]=tabley[i3]-delta;
+tablex[i3]=tablex[i3]-delta;
+
+}
+console.log(600/2);
+// |x
+//---
+// |
+if ((600/2)<tablex[i3] && (600/2) > tabley[i3]){
+tabley[i3]=tabley[i3]-delta;
+tablex[i3]=tablex[i3]+delta;
+}
+// |
+//---
+// |x
+if ((600/2)<tablex[i3] && (600/2) < tabley[i3]){
+tabley[i3]=tabley[i3]+delta;
+tablex[i3]=tablex[i3]+delta;
+}
+// |
+//---
+//x|
+if ((600/2)>tablex[i3] && (600/2) < tabley[i3]){
+tabley[i3]=tabley[i3]+delta;
+tablex[i3]=tablex[i3]-delta;
+}
+
+ 
+
+}
+
+ctx.reset();
+for (var i2=0;i2<=20;i2++){
+
+rysuj(tablex[i2]*(tableb[i2]/5),tabley[i2]*(tableb[i2]/5),tablew[i2]+skok*(tableb[i2]/5),tableh[i2]+skok*(tableb[i2]/5),tableg[i2]+skok*(tableb[i2]/5));
+//console.log(tablex[i2]*(tableb[i2]/10)+" "+tabley[i2]*(tableb[i2]/10));
+//console.log(600+" "+600);
+}
+
+
+}
+
+
+ctx.reset();
+for (var i2=0;i2<=20;i2++){
+
+rysuj(tablex[i2]*(tableb[i2]/5),tabley[i2]*(tableb[i2]/5),tablew[i2]+skok*(tableb[i2]/5),tableh[i2]+skok*(tableb[i2]/5),tableg[i2]+skok*(tableb[i2]/5));
+
+
+
+
+
+//rysuj(tablex[i2],tabley[i2],tablew[i2],tableh[i2],tableg[i2]);
+
+//console.log(tablex[i2]*(tableb[i2]/10)+" "+tabley[i2]*(tableb[i2]/10));
+//console.log(600+" "+600);
+}
+//setInterval(reflesh, 1000); 
+
+</script>
+
+<br><br>
+<table border="0"><tr><td>
+<table border="0"><tr><td style="text-align:center;">
+<input type="button" style="width:100;height:100;" onclick="hv=5;kont=0;skok=skok;delta2=0;matrix(delta2,skok,kont,hv);">
+</td></tr><tr><td>
+<input type="button" style="width:100;height:100;" onclick="kont=-2;skok=skok;delta2=0;matrix(delta2,skok,kont,0);">
+<input type="button" style="width:100;height:100;" onclick="kont=2;skok=skok;delta2=0;matrix(delta2,skok,kont,0);">
+</td></tr><tr><td style="text-align:center;">
+<input type="button" style="width:100;height:100;" onclick="hv=-5;kont=0;skok=skok;delta2=0;matrix(delta2,skok,kont,hv);">
+</td></tr></table>
+</td><td>
+
+<input type="button" style="width:100;height:100;" onclick="kont=0;skok=skok+5;delta2=10;matrix(delta2,skok,kont,0);"><br>
+<input type="button" style="width:100;height:100;" onclick="kont=0;skok=skok-5;delta2=-10;matrix(delta2,skok,kont,0);">
+
+
